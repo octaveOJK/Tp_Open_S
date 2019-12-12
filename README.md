@@ -96,9 +96,9 @@
 # [](#ii-boot-et-logs)II. Boot et Logs
 
 ~~-   🌞 générer un graphe de la séquence de boot~~
-~~    -   `systemd-analyze plot > graphe.svg`~~
-~~    -   très utile pour du débug~~
-~~    -   déterminer le temps qu'a mis `sshd.service` à démarrer~~
+~~    -   `systemd-analyze plot > graphe.svg` ~~
+~~    -   très utile pour du débug ~~
+~~    -   déterminer le temps qu'a mis `sshd.service` à démarrer ~~
 ~~-   on peut aussi utiliser `systemd-analyse blame` en ligne de commande ~~
 # [](#iii-m%C3%A9canismes-manipul%C3%A9s-par-systemd)III. Mécanismes manipulés par systemd
 
@@ -108,7 +108,6 @@
     -   identifier la RAM maximale à votre disposition (dans `/sys/fs/cgroup`)
     - `ps -ef -o pid,cmd,cgroup| grep sshd`
     - `ps -e -o pid,cmd,cgroup | grep sshd`
-    - `ps -e -o pid,cmd,cgroup | grep sshd` 
 
 
 -   🌞 modifier la RAM dédiée à votre session utilisateur
@@ -122,8 +121,8 @@
 
 ## [](#2-dbus)2. dbus
 
--   🌞 observer, identifier, et expliquer complètement un évènement choisi
--   🌞 envoyer un signal pour générer un évènement
+-   🌞 ~~observer, identifier, et expliquer complètement un évènement choisi
+-   🌞 ~~envoyer un signal pour générer un évènement
 
 ## [](#3-namespaces-et-cgroups)3. Namespaces et cgroups
 
@@ -147,13 +146,13 @@
 
 ~~Lancer un processus complètement sandboxé (conteneur ?) avec `systemd-nspawn` :~~
 ~~-   `sudo systemd-nspawn --ephemeral --private-network -D / bash`~~
-~~    -   vérifier que `--private-network` a fonctionné : `ip a`~~
-~~    -   🌞 expliquer cette ligne de commande ~~
-~~    -   🌞 prouver qu'un namespace réseau différent est utilisé ~~
-~~        -   pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc` ~~
-~~        -   `ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres) ~~
-~~        -   si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents ~~
- ~~   -   🌞 ajouter au moins une option pour isoler encore un peu plus le processus lancé ~~
+   -   ~~vérifier que `--private-network` a fonctionné : `ip a`
+   -   🌞 ~~expliquer cette ligne de commande 
+   -   🌞 ~~prouver qu'un namespace réseau différent est utilisé 
+       -   ~~pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc` 
+        -   ~~`ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres) 
+        -   ~~si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents 
+   -   🌞 ~~ajouter au moins une option pour isoler encore un peu plus le processus lancé 
 
 # [](#iv-systemd-units-in-depth)IV. systemd units in-depth
 
@@ -175,10 +174,10 @@
 
 ~~🌞 Créer un fichier dans `/etc/systemd/system` qui comporte le suffixe `.service` : ~~
 
-~~-   doit posséder une description ~~
-~~-   doit lancer un serveur web ~~
-~~-   doit ouvrir un port firewall quand il est lancé, et le fermer une fois que le service est stoppé ~~
-~~-   doit être limité en RAM ~~
+~~-   doit posséder une description 
+-   doit lancer un serveur web 
+~~-   doit ouvrir un port firewall quand il est lancé, et le fermer une fois que le service est stoppé 
+-   doit être limité en RAM
 
 >
 ## [](#3-sandboxing-heavy-security)3. Sandboxing (heavy security)
@@ -217,7 +216,7 @@ Les timers `systemd` ont un fonctionnement similaire au démon cron : ils permet
 
 Mise en place :
 
--   🌞 Créer un script simpliste qui archive un dossier sur le path créé dans le 2. : `/data/nfs`
--   🌞 Créer un fichier `.service` qui lance la backup
--   🌞 Créer un fichier `.timer` qui programme la backup tous les jours à heure fixe
-    -   en utilisant la clause `OnCalendar` (voir [la doc officielle](https://www.freedesktop.org/software/systemd/man/systemd.time.html) pour les valeurs possibles)
+-   🌞 ~~Créer un script simpliste qui archive un dossier sur le path créé dans le 2. : `/data/nfs`~~
+-   🌞 ~~Créer un fichier `.service` qui lance la backup~~
+-   🌞 ~~Créer un fichier `.timer` qui programme la backup tous les jours à heure fixe~~
+    -   ~~en utilisant la clause `OnCalendar` (voir [la doc officielle](https://www.freedesktop.org/software/systemd/man/systemd.time.html) pour les valeurs possibles)~~
