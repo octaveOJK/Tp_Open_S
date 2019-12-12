@@ -202,7 +202,7 @@
 ### [](#b-activation-automatique-dun-point-de-montage)B. Activation automatique d'un point de montage
 
 
-```
+
 
 🌞 **Prouver le bon fonctionnement de l'automount**
 
