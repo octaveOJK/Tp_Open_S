@@ -148,12 +148,12 @@
 ~~Lancer un processus complètement sandboxé (conteneur ?) avec `systemd-nspawn` :~~
 ~~-   `sudo systemd-nspawn --ephemeral --private-network -D / bash`~~
 ~~    -   vérifier que `--private-network` a fonctionné : `ip a`~~
-~~    -   🌞 expliquer cette ligne de commande~~
-~~    -   🌞 prouver qu'un namespace réseau différent est utilisé~~
-~~        -   pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc`~~
-~~        -   `ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres)~~
-~~        -   si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents~~
- ~~   -   🌞 ajouter au moins une option pour isoler encore un peu plus le processus lancé~~
+~~    -   🌞 expliquer cette ligne de commande ~~
+~~    -   🌞 prouver qu'un namespace réseau différent est utilisé ~~
+~~        -   pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc` ~~
+~~        -   `ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres) ~~
+~~        -   si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents ~~
+ ~~   -   🌞 ajouter au moins une option pour isoler encore un peu plus le processus lancé ~~
 
 # [](#iv-systemd-units-in-depth)IV. systemd units in-depth
 
