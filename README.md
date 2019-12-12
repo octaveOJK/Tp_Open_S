@@ -1,5 +1,3 @@
-# Tp_Open_S
-
 ## [](#1-first-steps)1. First steps
    -   `systemctl --version` = 243
 -   🌞 s'assurer que `systemd` est PID1 :
@@ -108,20 +106,19 @@
 
 -   🌞 identifier le cgroup utilisé par votre session SSH
     -   identifier la RAM maximale à votre disposition (dans `/sys/fs/cgroup`)
-    - `systemd-cgls` 
-        puis on cherche notre session ssh
-        -`└─system.slice`
-        -   `├─sshd.service`
-        -   `│ └─1068 /usr/sbin/sshd -D`
+    - `ps -ef -o pid,cmd,cgroup| grep sshd`
+    - `ps -e -o pid,cmd,cgroup | grep sshd`
+    - `ps -e -o pid,cmd,cgroup | grep sshd` 
 
 
 -   🌞 modifier la RAM dédiée à votre session utilisateur
-    -   `systemctl set-property <SLICE_NAME> MemoryMax=512M`
+    -   `systemctl set-property user-1002.slice MemoryMax=512M`
     -   vérifier le changement
-        -   toujours dans `/sys/fs/cgroup`
+        -  `systemctl show user-1002.slice |grep MemoryMax`
+            - `MemoryMax=536870912`
 -   la commande `systemctl set-property` génère des fichiers dans `/etc/systemd/system.control/`
     -   🌞 vérifier la création du fichier
-    -   on peut supprimer ces fichiers pour annuler les changements
+    -   ` cat /etc/systemd/system.control/user-1002.slice.d/50-MemoryMax.conf `
 
 ## [](#2-dbus)2. dbus
 
@@ -148,16 +145,15 @@
 
 ----------
 
-Lancer un processus complètement sandboxé (conteneur ?) avec `systemd-nspawn` :
-
--   `sudo systemd-nspawn --ephemeral --private-network -D / bash`
-    -   vérifier que `--private-network` a fonctionné : `ip a`
-    -   🌞 expliquer cette ligne de commande
-    -   🌞 prouver qu'un namespace réseau différent est utilisé
-        -   pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc`
-        -   `ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres)
-        -   si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents
-    -   🌞 ajouter au moins une option pour isoler encore un peu plus le processus lancé
+~~Lancer un processus complètement sandboxé (conteneur ?) avec `systemd-nspawn` :~~
+~~-   `sudo systemd-nspawn --ephemeral --private-network -D / bash`~~
+~~    -   vérifier que `--private-network` a fonctionné : `ip a`~~
+~~    -   🌞 expliquer cette ligne de commande~~
+~~    -   🌞 prouver qu'un namespace réseau différent est utilisé~~
+~~        -   pour voir les namespaces utilisés par un processus donné, on peut aller voir dans `/proc`~~
+~~        -   `ls -al /proc/<PID>/ns` : montre les liens vers les namespaces utilisés (identifiés par des nombres)~~
+~~        -   si le nombre vu ici est différent du nombre vu pour un autre processus alors ils sont dans des namespaces différents~~
+ ~~   -   🌞 ajouter au moins une option pour isoler encore un peu plus le processus lancé~~
 
 # [](#iv-systemd-units-in-depth)IV. systemd units in-depth
 
@@ -165,19 +161,24 @@ Lancer un processus complètement sandboxé (conteneur ?) avec `systemd-nspawn` 
 ## [](#1-exploration-de-services-existants)1. Exploration de services existants
 
 -   🌞 observer l'unité `auditd.service`
+        - `systemctl status auditd`
     
     -   trouver le path où est définit le fichier `auditd.service`
+         Le chemin : /usr/lib/systemd/system/auditd.service
+
     -   expliquer le principe de la clause `ExecStartPost`
-    -   expliquer les 4 "Security Settings" dans `auditd.service`
+        ExecStartPost=/sbin/augenrules --load : il recharge les règles de controles
+
+
 
 ## [](#2-cr%C3%A9ation-de-service-simple)2. Création de service simple
 
-🌞 Créer un fichier dans `/etc/systemd/system` qui comporte le suffixe `.service` :
+~~🌞 Créer un fichier dans `/etc/systemd/system` qui comporte le suffixe `.service` : ~~
 
--   doit posséder une description
--   doit lancer un serveur web
--   doit ouvrir un port firewall quand il est lancé, et le fermer une fois que le service est stoppé
--   doit être limité en RAM
+~~-   doit posséder une description ~~
+~~-   doit lancer un serveur web ~~
+~~-   doit ouvrir un port firewall quand il est lancé, et le fermer une fois que le service est stoppé ~~
+~~-   doit être limité en RAM ~~
 
 >
 ## [](#3-sandboxing-heavy-security)3. Sandboxing (heavy security)
